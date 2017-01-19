@@ -12,6 +12,26 @@ pipeline {
         }
     }
 
+    tools {
+    // Symbol for tool type and then name of configured tool installation
+        maven "MAVEN3.3.9"
+        jdk "JDK8u101"
+    }
+
+    post {
+            always {
+              echo 'This will always run outside'
+              sh "sudo docker ps"
+              sh "sudo docker images"
+            }
+            failure {
+              echo 'This will run only if failed outside'
+            }
+            changed {
+              echo 'This will run only if the state of the Pipeline has changed outside'
+            }
+    }
+
     stages {
         stage('checkout'){
             steps {
@@ -30,5 +50,25 @@ pipeline {
                 sh 'id'
             }
         }
+stage('test') {
+        post {
+            always {
+              echo 'This will always run'
+              sh "sudo docker ps"
+              sh "sudo docker images"
+            }
+            failure {
+              echo 'This will run only if failed'
+            }
+            changed {
+              echo 'This will run only if the state of the Pipeline has changed'
+            }
+         }
+
+         steps {
+             sh 'fail me please'
+         }
+        }
     }
 }
+
