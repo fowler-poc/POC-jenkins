@@ -51,7 +51,7 @@ pipeline {
              }
 
              steps {
-                 sh 'fail me please'
+                 echo 'last step here'
              }
         }
     }
