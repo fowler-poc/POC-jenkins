@@ -25,20 +25,18 @@ pipeline {
         stage('echo'){
             steps {
                 echo 'hello from beta'
+                sh 'df -h'
             }
         }
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
             agent{
-                dockerfile {
-                    filename "POCDockerfile2"
                     label 'DEV'
-                    args "-v /tmp:/tmp -v /var/run/docker.sock:/var/run/docker.sock"
-                }
             }
             steps {
                 sh "whoami"
                 sh 'id'
+                sh 'df -h'
             }
         }
         stage('test') {
