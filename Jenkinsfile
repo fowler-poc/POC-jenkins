@@ -3,11 +3,7 @@
 pipeline {
     // Make sure that the tools we need are installed and on the path.
     agent{
-         dockerfile {
-            filename "POCDockerfile"
-            label 'DEV'
-            args "-v /tmp:/tmp -v /var/run/docker.sock:/var/run/docker.sock"
-        }
+	label 'DEV'
     }
 
     tools {
