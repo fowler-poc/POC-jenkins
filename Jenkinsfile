@@ -31,12 +31,20 @@ pipeline {
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
             agent{
+		    dockerfile {
+                    filename "POCDockerfile"
                     label 'OA'
+                    args "-v /var/run/docker.sock:/var/run/docker.sock"
+                }      
             }
             steps {
                 sh "whoami"
                 sh 'id'
                 sh 'df -h'
+		sh 'java -version'
+		sh 'which java'
+		sh 'mvn -version'
+		sh 'which mvn'
             }
         }
         stage('test') {
