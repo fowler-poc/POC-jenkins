@@ -22,9 +22,9 @@ pipeline {
             steps {
                 echo 'hello from beta'
                 sh 'df -h'
-		sh 'java --version'
+		sh 'java -version'
 		sh 'which java'
-		sh 'mvn --version'
+		sh 'mvn -version'
 		sh 'which mvn'
             }
         }
