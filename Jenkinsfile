@@ -3,31 +3,35 @@
 pipeline {
     // Make sure that the tools we need are installed and on the path.
     agent{
-	label 'DEV'
+	label 'OA'
     }
 
     tools {
     // Symbol for tool type and then name of configured tool installation
         maven "MAVEN3.3.9"
-        jdk "JDK8u101"
+        jdk "JDK8u121"
     }
 
     stages {
         stage('checkout'){
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yixiaol-m/POC-jenkins.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/HA']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yixiaol-m/POC-jenkins.git']]])
             }
         }
         stage('echo'){
             steps {
                 echo 'hello from beta'
                 sh 'df -h'
+		sh 'java --version'
+		sh 'which java'
+		sh 'mvn --version'
+		sh 'which mvn'
             }
         }
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
             agent{
-                    label 'DEV'
+                    label 'OA'
             }
             steps {
                 sh "whoami"
