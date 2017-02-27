@@ -13,7 +13,7 @@ RUN apt-get update -y && apt-get install -y sudo \
         zip \
         ssh
 
-RUN groupadd -g 999 docker \
+RUN groupadd -g 3001 docker \
 	&& apt-get install -y libapparmor1 iptables \
     && wget -O docker.deb https://apt.dockerproject.org/repo/pool/main/d/docker-engine/docker-engine_1.9.1-0~trusty_amd64.deb \
     && sudo dpkg -i docker.deb
