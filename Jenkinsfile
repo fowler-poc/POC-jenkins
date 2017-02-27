@@ -3,7 +3,11 @@
 pipeline {
     // Make sure that the tools we need are installed and on the path.
     agent{
-	label 'OA'
+        dockerfile {
+            filename "POCDockerfile"
+            label 'vm'
+            args "-v /var/run/docker.sock:/var/run/docker.sock"
+        }      
     }
 
     tools {
@@ -30,13 +34,7 @@ pipeline {
         }
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
-            agent{
-		    dockerfile {
-                    filename "POCDockerfile"
-                    label 'OA'
-                    args "-v /var/run/docker.sock:/var/run/docker.sock"
-                }      
-            }
+            
             steps {
                 sh "whoami"
                 sh 'id'
