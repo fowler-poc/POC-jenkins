@@ -3,11 +3,7 @@
 pipeline {
     // Make sure that the tools we need are installed and on the path.
     agent{
-        dockerfile {
-            filename "POCDockerfile"
-            label 'OA'
-            args "-v /var/run/docker.sock:/var/run/docker.sock"
-        }      
+	label 'OA'
     }
 
     tools {
@@ -25,24 +21,37 @@ pipeline {
         stage('echo'){
             steps {
                 echo 'hello from beta'
-                sh 'df -h'
+                sh 'whoami'
+                sh 'id'
+                sh 'cat /etc/group'
+		sh 'df -h'
 		sh 'java -version'
 		sh 'which java'
 		sh 'mvn -version'
 		sh 'which mvn'
+		sh 'docker ps'
             }
         }
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
-            
+            agent{
+		    dockerfile {
+                    filename "POCDockerfile"
+                    label 'OA'
+                    args "-v /var/run/docker.sock:/var/run/docker.sock"
+                }      
+            }
             steps {
+	        echo 'Hello from inside container'
                 sh "whoami"
                 sh 'id'
+                sh 'cat /etc/group'
                 sh 'df -h'
 		sh 'java -version'
 		sh 'which java'
 		sh 'mvn -version'
 		sh 'which mvn'
+		sh 'docker ps'
             }
         }
         stage('test') {
