@@ -18,7 +18,7 @@ RUN groupadd -g 3001 docker \
     && wget -O docker.deb https://apt.dockerproject.org/repo/pool/main/d/docker-engine/docker-engine_1.9.1-0~trusty_amd64.deb \
     && sudo dpkg -i docker.deb
 
-RUN useradd -c "Jenkins user" -d $HOME -m jenkins -u 3000 \
+RUN useradd -c "Jenkins user" -m jenkins -u 3000 \
 	&& usermod -aG docker jenkins \
 	&& adduser jenkins sudo \
 	&& adduser jenkins docker \
