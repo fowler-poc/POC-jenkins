@@ -5,7 +5,7 @@ pipeline {
     agent{
         dockerfile {
             filename "POCDockerfile"
-            label 'vm'
+            label 'OA'
             args "-v /var/run/docker.sock:/var/run/docker.sock"
         }      
     }
