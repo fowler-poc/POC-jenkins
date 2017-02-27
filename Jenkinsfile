@@ -51,6 +51,7 @@ pipeline {
 		sh 'which java'
 		sh 'mvn -version'
 		sh 'which mvn'
+		sh 'ls -al /root/.docker/config.json'
 		sh 'docker ps'
             }
         }
