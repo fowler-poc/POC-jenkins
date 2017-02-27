@@ -38,7 +38,7 @@ pipeline {
 		    dockerfile {
                     filename "POCDockerfile"
                     label 'OA'
-                    args "-v /var/run/docker.sock:/var/run/docker.sock"
+                    args "--group-add 3001"
                 }      
             }
             steps {
@@ -51,7 +51,7 @@ pipeline {
 		sh 'which java'
 		sh 'mvn -version'
 		sh 'which mvn'
-		sh 'ls -al /root/.docker/config.json'
+		sh 'sleep 900'
 		sh 'docker ps'
             }
         }
