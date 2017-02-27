@@ -21,4 +21,5 @@ RUN groupadd -g 3001 docker \
 RUN useradd -c "Jenkins user" -d $HOME -m jenkins -u 3000 \
 	&& usermod -aG docker jenkins \
 	&& adduser jenkins sudo \
+	&& adduser jenkins docker \
 	&& echo '%sudo    ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
