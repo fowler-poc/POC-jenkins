@@ -3,7 +3,11 @@
 pipeline {
     // Make sure that the tools we need are installed and on the path.
     agent{
-	label 'OA'
+        dockerfile {
+            filename "POCDockerfile"
+            label 'OA-JNLP'
+            args "--group-add 3001"
+        }      
     }
 
     tools {
@@ -30,14 +34,15 @@ pipeline {
 		sh 'mvn -version'
 		sh 'which mvn'
 		sh 'docker ps'
+		sh 'docker run -d -t docker.io/ubuntu:16.04 /bin/cat'
             }
         }
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
             agent{
-		    dockerfile {
+                dockerfile {
                     filename "POCDockerfile"
-                    label 'OA'
+                    label 'OA-JNLP'
                     args "--group-add 3001"
                 }      
             }
@@ -51,16 +56,16 @@ pipeline {
 		sh 'which java'
 		sh 'mvn -version'
 		sh 'which mvn'
-		sh 'sleep 900'
 		sh 'docker ps'
+		sh 'docker run -d -t docker.io/ubuntu:16.04 /bin/cat'
             }
         }
         stage('test') {
             post {
                 always {
                   echo 'This will always run'
-                  sh "sudo docker ps"
-                  sh "sudo docker images"
+                  sh "docker ps"
+                  sh "docker images"
                 }
                 failure {
                   echo 'This will run only if failed'
