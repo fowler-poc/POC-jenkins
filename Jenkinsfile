@@ -34,15 +34,18 @@ pipeline {
             steps {
         		sh "docker build -t test-image:test -f POCDockerfile ."
                 sh "docker rmi test-image:test"
+                sleep 60
             }
         }
     }
     post {
         success {
             notifyAtomist("SUCCESS")
+            echo 'This will run only if success'
         }
         unstable {
             notifyAtomist("UNSTABLE")
+            echo 'This will run only if unstable'
         }
         failure {
             notifyAtomist("FAILURE")
