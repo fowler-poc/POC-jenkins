@@ -4,7 +4,7 @@ import groovy.json.JsonOutput
 pipeline {
     // Make sure that the tools we need are installed and on the path.
     agent{
-	label 'develop'
+	   label 'develop'
     }
 
     tools {
@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('checkout'){
             steps {
-		notifyAtomist("UNSTABLE", "STARTED")
+                notifyAtomist("UNSTABLE", "STARTED")
                 checkout([$class: 'GitSCM', branches: [[name: '*/HA']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yixiaol-m/POC-jenkins.git']]])
             }
         }
@@ -23,26 +23,17 @@ pipeline {
             steps {
                 echo 'hello from beta'
                 sh 'df -h'
-                 sh 'uname -a'
-		sh 'java -version'
-		sh 'which java'
-		sh 'mvn -version'
-		sh 'which mvn'
-		sh 'which apt-get'
+                sh 'uname -a'
+                sh 'java -version'
+                sh 'which java'
+                sh 'which apt-get'
             }
         }
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
-            agent{
-		    dockerfile {
-                    filename "POCDockerfile"
-                    label 'develop'
-                    args "-v /var/run/docker.sock:/var/run/docker.sock"
-                }      
-            }
             steps {
-		sh "docker build -t test-image:test -f POCDockerfile ."
-		sh "docker rmi test-image:test"
+        		sh "docker build -t test-image:test -f POCDockerfile ."
+                sh "docker rmi test-image:test"
             }
         }
         post {
