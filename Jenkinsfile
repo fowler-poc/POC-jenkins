@@ -36,23 +36,24 @@ pipeline {
                 sh "docker rmi test-image:test"
             }
         }
-        post {
-            success {
-                notifyAtomist("SUCCESS")
-            }
-            unstable {
-                notifyAtomist("UNSTABLE")
-            }
-            failure {
-                notifyAtomist("FAILURE")
-                echo 'This will run only if failed'
-            }
-            changed {
-                notifyAtomist("CHANGED")
-                echo 'This will run only if the state of the Pipeline has changed'
-            }
+    }
+    post {
+        success {
+            notifyAtomist("SUCCESS")
+        }
+        unstable {
+            notifyAtomist("UNSTABLE")
+        }
+        failure {
+            notifyAtomist("FAILURE")
+            echo 'This will run only if failed'
+        }
+        changed {
+            notifyAtomist("CHANGED")
+            echo 'This will run only if the state of the Pipeline has changed'
         }
     }
+    
 }
 
 /*
