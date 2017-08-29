@@ -21,7 +21,7 @@ pipeline {
         }
         stage('echo'){
             steps {
-                echo 'hello from beta !'
+                echo 'hello from beta !!!'
                 sh 'df -h'
                 sh 'uname -a'
                 sh 'java -version'
