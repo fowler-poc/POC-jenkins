@@ -26,7 +26,6 @@ pipeline {
                 sh 'uname -a'
                 sh 'java -version'
                 sh 'which java'
-                sh 'which apt-get'
             }
         }
         // While there is only one stage here, you can specify as many stages as you like!
