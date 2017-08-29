@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('checkout'){
             steps {
-                notifyAtomist("UNSTABLE", "STARTED")
+                notifyAtomist("STARTED")
                 checkout([$class: 'GitSCM', branches: [[name: '*/HA']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yixiaol-m/POC-jenkins.git']]])
             }
         }
