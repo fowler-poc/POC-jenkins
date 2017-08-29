@@ -31,7 +31,7 @@ pipeline {
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
             steps {
-        		sh "docker build -t test-image:test -f POCDockerfile ."
+                sh "docker build -t test-image:test -f POCDockerfile ."
                 sh "docker rmi test-image:test"
                 sleep 120
             }
