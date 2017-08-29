@@ -33,7 +33,7 @@ pipeline {
             steps {
         		sh "docker build -t test-image:test -f POCDockerfile ."
                 sh "docker rmi test-image:test"
-                sleep 60
+                sleep 120
             }
         }
     }
