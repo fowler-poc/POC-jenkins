@@ -15,13 +15,14 @@ pipeline {
     stages {
         stage('checkout'){
             steps {
-                notifyAtomist("RUNNING", "STARTED")
                 checkout([$class: 'GitSCM', branches: [[name: '*/HA']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yixiaol-m/POC-jenkins.git']]])
+                
+                notifyAtomist("UNSTABLE", "STARTED")
             }
         }
         stage('echo'){
             steps {
-                echo 'hello from beta !!!'
+                echo 'hello from beta'
                 sh 'df -h'
                 sh 'uname -a'
                 sh 'java -version'
@@ -31,9 +32,9 @@ pipeline {
         // While there is only one stage here, you can specify as many stages as you like!
         stage("build") {
             steps {
-                sh "docker build -t test-image:test -f POCDockerfile ."
+        		sh "docker build -t test-image:test -f POCDockerfile ."
                 sh "docker rmi test-image:test"
-                sleep 120
+                sleep 60
             }
         }
     }
@@ -50,6 +51,10 @@ pipeline {
             notifyAtomist("FAILURE")
             echo 'This will run only if failed'
         }
+        changed {
+            notifyAtomist("CHANGED")
+            echo 'This will run only if the state of the Pipeline has changed'
+        }
     }
     
 }
@@ -58,7 +63,8 @@ pipeline {
  * Notify the Atomist services about the status of a build based from a
  * git repository.
  */
-def notifyAtomist(buildStatus, buildPhase="FINALIZED", endpoint="https://webhook.atomist.com/atomist/jenkins") {
+def notifyAtomist(buildStatus, buildPhase="FINALIZED",
+                  endpoint="https://webhook.atomist.com/atomist/jenkins") {
 
     def payload = JsonOutput.toJson([
         name: env.JOB_NAME,
