@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('checkout'){
             steps {
-                notifyAtomist("UNSTABLE", "STARTED")
+                notifyAtomist("RUNNING", "STARTED")
                 checkout([$class: 'GitSCM', branches: [[name: '*/HA']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yixiaol-m/POC-jenkins.git']]])
             }
         }
@@ -49,10 +49,6 @@ pipeline {
         failure {
             notifyAtomist("FAILURE")
             echo 'This will run only if failed'
-        }
-        changed {
-            notifyAtomist("CHANGED")
-            echo 'This will run only if the state of the Pipeline has changed'
         }
     }
     
