@@ -62,8 +62,7 @@ pipeline {
  * Notify the Atomist services about the status of a build based from a
  * git repository.
  */
-def notifyAtomist(buildStatus, buildPhase="FINALIZED",
-                  endpoint="https://webhook.atomist.com/atomist/jenkins") {
+def notifyAtomist(buildStatus, buildPhase="FINALIZED", endpoint="https://webhook.atomist.com/atomist/jenkins") {
 
     def payload = JsonOutput.toJson([
         name: env.JOB_NAME,
