@@ -1,1 +1,2 @@
 # POC-jenkins
+with atomist
